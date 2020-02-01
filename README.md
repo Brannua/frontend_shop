@@ -263,6 +263,19 @@ npm run lint // Lints and fixes files
         import axios from 'axios'
         ```        
 
+    - axios 处理并发请求的方式
+
+      - axios.all() 按照请求的顺序返回结果数组
+      - axios.spread() 处理结果数组
+
+      ```
+      axios.all([func1(), func2(), func3(), ...]).then(
+        axios.spread((res1, res2, res3, ...) => {
+          // ...
+        })
+      )
+      ```
+
     - [Vue.js 生命周期图示](https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA)
 
 - Mock.js 生成随机数据 , 拦截 Ajax 请求
