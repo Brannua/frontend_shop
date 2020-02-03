@@ -32,13 +32,17 @@ npm run lint // Lints and fixes files
   - CSS Pre-processors Sass/SCSS (with dart-sass) for sass
   - ESLint with error prevention only ( Lint on save )
 
-- 路由模式 : **hash**
+> 开发规则
+
+- 路由模式 : hash
+
+- 模块化规范遵循 ES6
 
 - 路由跳转的方式
 
-  - vue-router : ```<router-link to="path"/>```
   - vant : ```<van-tabbar-item to="path"/>```
   - [van-tabbar-doc](https://youzan.github.io/vant/#/zh-CN/tabbar)
+  - vue-router : ```<router-link to="path"/>```
 
 > src 目录
 
@@ -320,3 +324,6 @@ npm run lint // Lints and fixes files
     import api from '@/service.config.js'
     axios.get(api.getSwipeItems).then(res=>{...})
     ```
+
+- 注册 / 登录 页面编写 ( @/views/profile.vue )
+
