@@ -14,7 +14,7 @@
           />
         </van-cell-group>
         <div>
-          <van-button type="primary" size="large">登录</van-button>
+          <van-button type="primary" size="large" @click="loginHandler">登录</van-button>
         </div>
       </van-tab>
 
@@ -62,14 +62,38 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.$toast.success("注册成功");
-            this.registUserName = this.registPassWord = '';
+            this.registUserName = this.registPassWord = "";
           } else {
             this.$toast.fail("注册失败");
           }
         })
         .catch(err => {
           this.$toast.fail("注册失败");
-          console.log(err);
+          console.error(err);
+        });
+    },
+    loginHandler() {
+      this.$axios({
+        method: "post",
+        url: api.loginUser,
+        data: {
+          userName: this.loginUserName,
+          passWord: this.loginPassWord
+        }
+      })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$toast.success("登陆成功");
+            // 跳转首页
+            this.$router.push('/');
+          } else {
+            res.data.code == 404 && this.$toast.fail("用户名不存在");
+            res.data.code == 401 && this.$toast.fail("密码错误");
+          }
+        })
+        .catch(err => {
+          this.$toast.fail("登陆失败");
+          console.error(err);
         });
     }
   }

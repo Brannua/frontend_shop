@@ -10,4 +10,5 @@ export default {
   getRecommendProducts: `${MOCKSERVERURL}getRecommendProducts`,
 
   registUser: `${SERVERURL}user/registUser`,
+  loginUser: `${SERVERURL}user/loginUser`,
 }
