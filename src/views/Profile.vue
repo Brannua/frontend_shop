@@ -40,6 +40,7 @@
 
 <script>
 import api from "@/service.config.js";
+import { mapActions } from 'vuex'; // 映射 vuex 中的所有 action
 export default {
   data() {
     return {
@@ -50,6 +51,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['loginAction']), // 加载指定名称的 action 方法
     registHandler() {
       this.$axios({
         method: "post",
@@ -84,6 +86,8 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.$toast.success("登陆成功");
+            // 保存用户信息
+            this.loginAction(this.loginUserName);
             // 跳转首页
             this.$router.push('/');
           } else {

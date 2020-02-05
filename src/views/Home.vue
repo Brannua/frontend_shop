@@ -3,7 +3,7 @@
     <!-- 首页头部导航栏 -->
     <van-nav-bar title="首页" class="nav-bar">
       <van-icon name="search" slot="left"></van-icon>
-      <van-icon name="cart" slot="right"></van-icon>
+      <van-icon slot="right" @click="loginHandler">{{ userInfo.userName }}</van-icon>
     </van-nav-bar>
 
     <!-- 轮播图 -->
@@ -44,7 +44,8 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-import api from '@/service.config.js'
+import api from '@/service.config.js';
+import { mapState } from 'vuex';
 export default {
   components: {
     swiper,
@@ -61,6 +62,7 @@ export default {
       recommendProducts: []
     };
   },
+  computed: mapState(['userInfo']),
   methods: {
     getSwipeItems() {
       return this.$axios({
@@ -79,6 +81,9 @@ export default {
         method: 'get',
         url: api.getRecommendProducts
       })
+    },
+    loginHandler() {
+      this.$router.push('/profile');
     }
   },
   created() {

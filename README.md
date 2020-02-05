@@ -48,7 +48,7 @@ npm run lint // Lints and fixes files
 
 - assets : 第三方资源文件
 - components : 公共组件
-- mock : 生成随机数据 , 拦截 Ajax 请求 , 用于后端接口未完成的前端开发环境下
+- mock : 生成随机数据模拟后端数据接口 , 拦截 Ajax 请求 , 用于后端接口未完成的前端开发环境下
 - router : vue-router 管理路由
 - store : vuex 管理数据
 - views : 页面组件
@@ -327,3 +327,28 @@ npm run lint // Lints and fixes files
 
 - 注册 / 登录 页面编写 ( @/views/profile.vue )
 
+- 用户登录功能还可以使用 阿里大于 给用户发短信验证码 , 哈哈哈哈哈哈~
+
+- 保存成功登陆的用户信息的一些实现方案
+
+  - 方法一 : 挑选使用基于 Session 会话的中间件 
+  
+    - [koa2-session](https://www.npmjs.com/package/koa2-session)
+
+    - [cookie-session](https://www.npmjs.com/package/cookie-session)
+
+    - cookie 保存在客户端 , session 保存在服务端 , sessionID 保存在 cookie 里面
+
+  - 方法二 : Redis
+
+  - 方法三 : H5 本地化存储方案
+
+    - sessionStorage
+
+    - localStorage
+
+  - 方法四 : [Vuex](https://vuex.vuejs.org/zh/)
+
+    - 由于本项目的业务并不复杂 , 为了复习巩固技术知识 , 在保存用户登录状态功能的开发中采用 Vuex
+
+    - 该功能中 actions 的使用单纯是为了练习通过 actions 派发 commit 来调用 mutations 的方法来改变 state 中的数据 , 而 actions 的真正意义在于其中可以书写异步代码 , mutations 是唯一可以改变 state 中数据的方法 , 其中只能书写同步代码
