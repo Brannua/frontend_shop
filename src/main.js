@@ -28,8 +28,11 @@ import {
   Field,
   Button,
   Toast,
+  Col,
+  Row,
+  List,
 } from 'vant'
-Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast)
+Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List)
 
 Vue.config.productionTip = false
 

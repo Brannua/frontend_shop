@@ -349,6 +349,57 @@ npm run lint // Lints and fixes files
 
   - 方法四 : [Vuex](https://vuex.vuejs.org/zh/)
 
+    - vuex保存的信息会在页面刷新后被清除掉
+
     - 由于本项目的业务并不复杂 , 为了复习巩固技术知识 , 在保存用户登录状态功能的开发中采用 Vuex
 
     - 该功能中 actions 的使用单纯是为了练习通过 actions 派发 commit 来调用 mutations 的方法来改变 state 中的数据 , 而 actions 的真正意义在于其中可以书写异步代码 , mutations 是唯一可以改变 state 中数据的方法 , 其中只能书写同步代码
+
+- 商品分类页面 ( [van-col](https://youzan.github.io/vant/#/zh-CN/col) 栅格布局 )
+
+  - 改变选中的商品分类交互
+
+    ```
+    // html
+    <li
+      v-for="(item, index) in productTypes"
+      :key="index"
+      :class="{active: index == active}"
+      @click="activeHandler(index)"
+    >{{ item.typeName }}</li>
+
+    // data
+    data() {
+      return {
+        active: 0, // 默认选中第一种商品分类
+      };
+    }
+
+    // css
+    .active {
+      color: #fff;
+      background-color: rgb(25, 137, 251);
+    }
+
+    // js
+    methods: {
+      // 改变选中的商品分类
+      activeHandler(index) {
+        this.active = index;
+      }
+    }
+    ```
+
+  - 商品分类对应的商品列表 ( [van-list](https://youzan.github.io/vant/#/zh-CN/list) 自带上拉加载和下拉刷新 )
+
+    - 商品名称只显示两行 , 多余内容打点显示
+
+      ```
+      .list-item-name {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      ```

@@ -11,4 +11,6 @@ export default {
 
   registUser: `${SERVERURL}user/registUser`,
   loginUser: `${SERVERURL}user/loginUser`,
+  getProductTypes: `${SERVERURL}type/getProductTypes`,
+  getProductsByType: `${SERVERURL}product/getProductsByType`,
 }
