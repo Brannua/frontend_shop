@@ -403,3 +403,29 @@ npm run lint // Lints and fixes files
         text-overflow: ellipsis;
       }
       ```
+
+  - [BUG 记录](https://github.com/youzan/vant/issues/5634)
+
+    - 将 position : fixed; 改为 position : absolute; 就可以触发 load 事件
+
+    - ```:immediate-check="false``` 取消首次加载数据就触发 load 事件 , 否则如下代码报错 , 因为首次加载组件的时候 this.productTypes 和 this.productList 都为空数组
+
+      ```
+      loadMoreData() {
+        this.getProductList(
+          this.productTypes[this.active].typeId,
+          this.productList.length,
+          // ...
+        );
+      }
+      ```
+
+    - Tips: 在实现下拉刷新功能时 , 由于 van-list 设置了 ```position: absolute;``` 导致父元素 ```<van-pull-refresh/>``` 塌陷 , 故已将如下 css 代码从 ```<van-list/>``` 迁移至 ```<van-pull-refresh/>``` 的父元素 ```<van-col class="container">```
+
+      ```
+      position: absolute;
+      right: 0;
+      top: 1rem;
+      bottom: 1rem;
+      overflow-y: scroll;
+      ```

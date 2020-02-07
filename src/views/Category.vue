@@ -1,7 +1,6 @@
 <template>
   <div>
     <van-nav-bar title="商品分类" class="nav"></van-nav-bar>
-
     <div class="category">
       <van-row>
         <van-col span="6" class="left-nav">
@@ -14,14 +13,22 @@
             >{{ item.typeName }}</li>
           </ul>
         </van-col>
-        <van-col span="18">
-          <van-list class="list">
-            <div class="list-item" v-for="(item, index) in productList" :key="index">
-              <img :src="item.img" />
-              <p class="list-item-name">{{ item.name }}</p>
-              <p>$ {{ item.price }}</p>
-            </div>
-          </van-list>
+        <van-col span="18" class="container">
+          <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
+            <van-list
+              class="list"
+              v-model="loading"
+              :finished="finished"
+              @load="loadMoreData"
+              :immediate-check="false"
+            >
+              <div class="list-item" v-for="(item, index) in productList" :key="index">
+                <img :src="item.img" />
+                <p class="list-item-name">{{ item.name }}</p>
+                <p>$ {{ item.price }}</p>
+              </div>
+            </van-list>
+          </van-pull-refresh>
         </van-col>
       </van-row>
     </div>
@@ -53,7 +60,10 @@ export default {
       active: 0, // 默认选中第一种商品分类
       productTypes: [],
       productList: [],
-      count: 10 // 默认一次查询十条数据
+      count: 10, // 默认一次查询十条数据
+      loading: false,
+      finished: false,
+      isRefresh: false
     };
   },
   methods: {
@@ -68,7 +78,12 @@ export default {
         }
       })
         .then(res => {
-          this.productList = this.productList.concat(res.data.data);
+          if (res.data.data.length) {
+            this.productList = this.productList.concat(res.data.data);
+            this.loading = false;
+          } else {
+            this.finished = true;
+          }
         })
         .catch(err => {
           console.error(err);
@@ -83,6 +98,22 @@ export default {
         this.productList.length,
         this.count
       );
+    },
+    loadMoreData() {
+      this.getProductList(
+        this.productTypes[this.active].typeId,
+        this.productList.length,
+        this.count
+      );
+    },
+    onRefresh() {
+      this.productList = [];
+      this.getProductList(
+        this.productTypes[this.active].typeId,
+        this.productList.length,
+        this.count
+      );
+      this.isRefresh = false;
     }
   }
 };
@@ -109,28 +140,30 @@ export default {
   }
 }
 
-.list {
-  position: fixed;
+.container {
+  position: absolute;
+  right: 0;
   top: 1rem;
   bottom: 1rem;
   overflow-y: scroll;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  &-item {
-    width: 40%;
-    text-align: center;
-    img {
-      width: 2rem;
-      height: 2rem;
-    }
-    &-name {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-      text-overflow: ellipsis;
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    &-item {
+      width: 40%;
+      text-align: center;
+      img {
+        width: 2rem;
+        height: 2rem;
+      }
+      &-name {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 }

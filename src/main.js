@@ -31,8 +31,9 @@ import {
   Col,
   Row,
   List,
+  PullRefresh,
 } from 'vant'
-Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List)
+Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List).use(PullRefresh)
 
 Vue.config.productionTip = false
 
