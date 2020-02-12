@@ -429,3 +429,78 @@ npm run lint // Lints and fixes files
       bottom: 1rem;
       overflow-y: scroll;
       ```
+
+- Vue-Router 中传递参数的三种方式
+
+  - 匿名路由 ( 类似于 GET 方式传参 , 参数拼接在URL后 , 用户刷新页面后仍可获取到参数 )
+
+    ```
+    // src/router/index.js
+    {
+      path: '/detail',
+    }
+
+    // src/views/Category.vue
+    this.$router.push({
+      path: '/detail',
+      query: {id: ...}
+    });
+
+    // src/views/Detail.vue
+    created() {
+      console.log(this.$route.query.id);
+    }
+    ```
+
+  - 具名路由 ( 类似于 POST 方式传参 , 用户刷新页面后参数丢失 )
+
+    ```
+    // src/router/index.js
+    {
+      path: '/detail',
+      name: 'detail',
+    }
+
+    // src/views/Category.vue
+    this.$router.push({
+      name: 'detail',
+      params: {id: ...}
+    });
+
+    // src/views/Detail.vue
+    created() {
+      console.log(this.$route.params.id);
+    }
+    ```
+
+  - path可动态配置的路由 ( 参数拼接在URL上 , 用户刷新页面后仍可获取到参数 )
+
+    ```
+    // src/router/index.js
+    {
+      path: '/detail/:id',
+    }
+
+    // src/views/Category.vue
+    this.$router.push(`/detail/${id}`);
+
+    // src/views/Detail.vue
+    created() {
+      console.log(this.$route.params.id);
+    }
+    ```
+
+- 加入购物车功能的两种思路
+
+  - 点击加入购物车后 , 将商品信息保存在本地存储 , 购物车页面可从本地存储中读取商品信息并展示 , 在用户点击提交订单结算的时候再判断用户是否登录
+
+  - 点击加入购物车后 , 判断用户是否登录 , 只有登陆成功的用户才可以将商品信息加入到数据库中的购物车表中 , 在购物车页面读取数据库展示信息
+
+    - Tips : 本项目采用前端Vuex保存用户信息页面刷新后信息会丢失 , 一般项目大多采用后端保存用户信息( oa2-session / redis ) 结合 JWT token
+
+    - 判断对象是空对象的方式
+
+      ```
+      let obj = {}
+      JSON.stringify(obj) == '{}'
+      ```

@@ -5,9 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userInfo: {
-      userName: '点击登录'
-    }
+    userInfo: {}
   },
   mutations: {
     // 成功登录后保存住用户名

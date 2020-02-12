@@ -88,8 +88,8 @@ export default {
             this.$toast.success("登陆成功");
             // 保存用户信息
             this.loginAction(this.loginUserName);
-            // 跳转首页
-            this.$router.push('/');
+            // 跳转回上一页
+            this.$router.go(-1);
           } else {
             res.data.code == 404 && this.$toast.fail("用户名不存在");
             res.data.code == 401 && this.$toast.fail("密码错误");

@@ -32,8 +32,11 @@ import {
   Row,
   List,
   PullRefresh,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
 } from 'vant'
-Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List).use(PullRefresh)
+Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List).use(PullRefresh).use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton)
 
 Vue.config.productionTip = false
 

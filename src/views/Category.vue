@@ -22,7 +22,7 @@
               @load="loadMoreData"
               :immediate-check="false"
             >
-              <div class="list-item" v-for="(item, index) in productList" :key="index">
+              <div @click="goDetail(item._id)" class="list-item" v-for="(item, index) in productList" :key="index">
                 <img :src="item.img" />
                 <p class="list-item-name">{{ item.name }}</p>
                 <p>$ {{ item.price }}</p>
@@ -114,6 +114,14 @@ export default {
         this.count
       );
       this.isRefresh = false;
+    },
+    goDetail(productId) {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          id: productId
+        }
+      });
     }
   }
 };

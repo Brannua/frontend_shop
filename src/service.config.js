@@ -13,4 +13,5 @@ export default {
   loginUser: `${SERVERURL}user/loginUser`,
   getProductTypes: `${SERVERURL}type/getProductTypes`,
   getProductsByType: `${SERVERURL}product/getProductsByType`,
+  getProductDetailById: `${SERVERURL}product/getProductDetailById`,
 }

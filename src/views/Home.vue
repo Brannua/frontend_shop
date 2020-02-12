@@ -3,7 +3,7 @@
     <!-- 首页头部导航栏 -->
     <van-nav-bar title="首页" class="nav-bar">
       <van-icon name="search" slot="left"></van-icon>
-      <van-icon slot="right" @click="loginHandler">{{ userInfo.userName }}</van-icon>
+      <van-icon slot="right" @click="loginHandler">{{ JSON.stringify(userInfo) === '{}' ? '点击登录' : userInfo.userName }}</van-icon>
     </van-nav-bar>
 
     <!-- 轮播图 -->

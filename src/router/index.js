@@ -20,6 +20,11 @@ const routes = [{
     }
   },
   {
+    path: '/detail',
+    name: 'detail',
+    component: () => import("@/views/Detail")
+  },
+  {
     path: '/cart',
     components: {
       default: () => import("@/views/Cart"),
