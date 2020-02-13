@@ -19,7 +19,7 @@
 
 <script>
 import api from "@/service.config.js";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   created() {
     this.$axios({
@@ -31,7 +31,6 @@ export default {
     })
       .then(res => {
         this.detail = res.data.data;
-        console.log(this.detail);
       })
       .catch(err => {
         console.error(err);
@@ -42,18 +41,32 @@ export default {
       detail: {}
     };
   },
-  computed: mapState(['userInfo']),
+  computed: mapState(["userInfo"]),
   methods: {
     returnPrevPage() {
       this.$router.go(-1);
     },
     addCartHandler() {
-      if (JSON.stringify(this.userInfo) === '{}') {
-        this.$toast.fail('请先登录');
-        this.$router.push('/profile');
+      if (JSON.stringify(this.userInfo) === "{}") {
+        this.$toast.fail("请先登录");
+        this.$router.push("/profile");
       } else {
         // 插入购物车
-        
+        this.$axios({
+          method: "post",
+          url: api.addProductToCart,
+          data: {
+            productId: this.detail._id,
+            userId: this.userInfo._id
+          }
+        })
+          .then(res => {
+            res.data.code === 200 && this.$toast.success(res.data.message);
+          })
+          .catch(err => {
+            this.$toast.fail('添加失败');
+            console.error(err);
+          });
       }
     }
   }

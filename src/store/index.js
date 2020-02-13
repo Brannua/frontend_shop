@@ -10,7 +10,7 @@ export default new Vuex.Store({
   mutations: {
     // 成功登录后保存住用户名
     loginMutation(state, status) {
-      state.userInfo.userName = status;
+      state.userInfo = status;
     }
   },
   actions: {

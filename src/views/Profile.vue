@@ -87,7 +87,7 @@ export default {
           if (res.data.code == 200) {
             this.$toast.success("登陆成功");
             // 保存用户信息
-            this.loginAction(this.loginUserName);
+            this.loginAction(res.data.userInfo);
             // 跳转回上一页
             this.$router.go(-1);
           } else {

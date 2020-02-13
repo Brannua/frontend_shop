@@ -14,4 +14,7 @@ export default {
   getProductTypes: `${SERVERURL}type/getProductTypes`,
   getProductsByType: `${SERVERURL}product/getProductsByType`,
   getProductDetailById: `${SERVERURL}product/getProductDetailById`,
+  addProductToCart: `${SERVERURL}cart/addProductToCart`,
+  getCartByUserId: `${SERVERURL}cart/getCartByUserId`,
+  deleteProductInCartByProductId: `${SERVERURL}cart/deleteProductInCartByProductId`,
 }

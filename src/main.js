@@ -35,8 +35,10 @@ import {
   GoodsAction,
   GoodsActionIcon,
   GoodsActionButton,
+  Card,
+  SubmitBar,
 } from 'vant'
-Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List).use(PullRefresh).use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton)
+Vue.use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Tab).use(Tabs).use(CellGroup).use(Field).use(Button).use(Toast).use(Col).use(Row).use(List).use(PullRefresh).use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton).use(Card).use(SubmitBar)
 
 Vue.config.productionTip = false
 
