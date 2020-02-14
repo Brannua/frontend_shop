@@ -69,9 +69,8 @@ export default {
             this.$toast.fail("注册失败");
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.$toast.fail("注册失败");
-          console.error(err);
         });
     },
     loginHandler() {
@@ -95,9 +94,8 @@ export default {
             res.data.code == 401 && this.$toast.fail("密码错误");
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.$toast.fail("登陆失败");
-          console.error(err);
         });
     }
   }

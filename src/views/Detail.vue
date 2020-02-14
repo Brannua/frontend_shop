@@ -32,8 +32,8 @@ export default {
       .then(res => {
         this.detail = res.data.data;
       })
-      .catch(err => {
-        console.error(err);
+      .catch((err) => {
+        console.log(err);
       });
   },
   data() {
@@ -63,9 +63,8 @@ export default {
           .then(res => {
             res.data.code === 200 && this.$toast.success(res.data.message);
           })
-          .catch(err => {
+          .catch(() => {
             this.$toast.fail('添加失败');
-            console.error(err);
           });
       }
     }

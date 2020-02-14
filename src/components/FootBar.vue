@@ -1,5 +1,5 @@
 <template>
-  <van-tabbar v-model="active">
+  <van-tabbar v-model="active" @change="changeHandler">
     <van-tabbar-item icon="shop-o" to="/">首页</van-tabbar-item>
     <van-tabbar-item icon="records" to="/category">分类</van-tabbar-item>
     <van-tabbar-item icon="cart-o" to="/cart">购物车</van-tabbar-item>
@@ -12,6 +12,14 @@ export default {
   data () {
     return {
       active: 0
+    }
+  },
+  created() {
+    this.active = parseInt(localStorage.getItem('active'));
+  },
+  methods: {
+    changeHandler(active) {
+      localStorage.setItem('active', active);
     }
   }
 };

@@ -504,3 +504,54 @@ npm run lint // Lints and fixes files
       let obj = {}
       JSON.stringify(obj) == '{}'
       ```
+
+- 刷新页面后 , 优化FooterBar组件的默认选中
+
+  ```
+  // vant文档说明切换标签时会触发change事件, 故给tabbar组件绑定change事件, 在其中将当前active值保存在本地存储, 每次刷新页面从本地存储读取active值应用到该组件上
+  // Tips: localStorage读取的是string类型的数据, 需要转化成number类型
+
+  // FooterBar.vue
+  changeHandler(active) {
+    localStorage.setItem('active', active);
+  }
+
+  created() {
+    this.active = parseInt(localStorage.getItem('active'));
+  }
+  ```
+
+- vue2.x 提出 ```<keep-alive />``` 组件, 主要用于保留组件状态或避免重新渲染。
+
+  - [doc](https://cn.vuejs.org/v2/api/#keep-alive)
+
+    ```
+    // App.vue
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-else="!$route.meta.keepAlive"></router-view>
+
+    // /@/router/index.js 中指定需要被缓存的组件的路由
+    meta: {
+      keepAlive: true
+    }
+    ```
+
+- 路由组件采用懒加载的方式
+
+- 增添404错误组件 (@/views.Error.vue)
+
+- 项目打包和分析(--report)
+
+  ```
+  vue.config.js // vue-cli配置的核心文件
+
+  "build": "vue-cli-service build --report" // package.json
+  ```
+
+- gzip压缩项目
+
+  ```
+  npm install compression-webpack-plugin --save-dev
+  ```

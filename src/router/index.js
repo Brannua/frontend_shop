@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import FootBar from '@/components/FootBar.vue' // 底部菜单栏组件
+let FootBar = () => import("@/components/FootBar.vue") // 底部菜单栏组件
 
 Vue.use(VueRouter)
 
@@ -10,6 +10,9 @@ const routes = [{
     components: {
       default: () => import("@/views/Home"),
       'foot-bar': FootBar
+    },
+    meta: {
+      keepAlive: true
     }
   },
   {
@@ -17,6 +20,9 @@ const routes = [{
     components: {
       default: () => import("@/views/Category"),
       'foot-bar': FootBar
+    },
+    meta: {
+      keepAlive: true
     }
   },
   {
@@ -36,7 +42,14 @@ const routes = [{
     components: {
       default: () => import("@/views/Profile"),
       'foot-bar': FootBar
+    },
+    meta: {
+      keepAlive: true
     }
+  },
+  {
+    path: '*',
+    component: () => import("@/views/Error")
   }
 ]
 

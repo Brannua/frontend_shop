@@ -63,9 +63,8 @@ export default {
             }
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.$toast.fail("获取购物车列表失败");
-          console.error(err);
         });
     }
   },
@@ -92,9 +91,8 @@ export default {
             this.$toast.success(res.data.message);
           }
         })
-        .catch(err => {
-          this.$toast.fail(err);
-          console.error(err);
+        .catch(() => {
+          this.$toast.fail("删除失败");
         });
     }
   }

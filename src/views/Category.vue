@@ -51,8 +51,8 @@ export default {
           this.count
         );
       })
-      .catch(err => {
-        console.error(err);
+      .catch((err) => {
+        console.log(err);
       });
   },
   data() {
@@ -85,8 +85,8 @@ export default {
             this.finished = true;
           }
         })
-        .catch(err => {
-          console.error(err);
+        .catch((err) => {
+          console.log(err);
         });
     },
     // 改变选中的商品分类
