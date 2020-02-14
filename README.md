@@ -1,5 +1,7 @@
 # 移动端农机商城前端 ( SPA )
 
+![](./img/demo.png)
+
 - 项目技术栈
 
   - `Vue、Vant、ES6、Scss、webpack、Node.js、Koa2、 MongoDB、Mongoose`
