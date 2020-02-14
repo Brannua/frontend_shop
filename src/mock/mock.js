@@ -1,6 +1,8 @@
-
 import Mock from 'mockjs'
-import { mockSwiperImage, mockProductData } from './tool.js'
+import {
+  mockSwiperImage,
+  mockProductData
+} from './tool.js'
 import api from '@/service.config.js'
 
 

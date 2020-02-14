@@ -1,29 +1,14 @@
 <template>
   <div>
-    <van-nav-bar title="购物车" class="nav"></van-nav-bar>
+    <van-nav-bar class="nav" title="购物车"></van-nav-bar>
     <div class="card">
-      <van-card
-        v-for="(item, index) in productList"
-        :key="index"
-        :price="item.price"
-        :desc="item.company"
-        :title="item.name"
-        :thumb="item.img"
-      >
+      <van-card v-for="(item, index) in productList" :key="index" :price="item.price" :desc="item.company" :title="item.name" :thumb="item.img">
         <div slot="footer">
-          <van-button
-            size="mini"
-            @click="deleteProductHandler(item._id, index)"
-          >删除</van-button>
+          <van-button size="mini" @click="deleteProductHandler(item._id, index)">删除</van-button>
         </div>
       </van-card>
     </div>
-    <van-submit-bar 
-      class="submit-bar"
-      button-text="提交订单"
-      :price="sumPrice"
-      @submit="submitHandler"
-    ></van-submit-bar>
+    <van-submit-bar class="submit-bar" button-text="提交订单" :price="sumPrice" @submit="submitHandler"></van-submit-bar>
   </div>
 </template>
 
@@ -31,17 +16,6 @@
 import { mapState } from "vuex";
 import api from "@/service.config.js";
 export default {
-  computed: {
-    ...mapState(["userInfo"]),
-    sumPrice() {
-      return (
-        this.productList.reduce((sum, itemPrice) => {
-          sum += itemPrice.price;
-          return sum;
-        }, 0) * 100
-      );
-    }
-  },
   created() {
     if (JSON.stringify(this.userInfo) === "{}") {
       this.$toast.fail("请先登录");
@@ -73,9 +47,19 @@ export default {
       productList: []
     };
   },
+  computed: {
+    ...mapState(["userInfo"]),
+    sumPrice() {
+      return (
+        this.productList.reduce((sum, itemPrice) => {
+          return sum += itemPrice.price;
+        }, 0) * 100
+      );
+    }
+  },
   methods: {
     submitHandler() {
-      this.$toast.success("结算 todo...");
+      this.$toast.success("结算功能该项目未涉及");
     },
     deleteProductHandler(id, index) {
       this.$axios({
@@ -85,7 +69,7 @@ export default {
           productId: id
         }
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 200) {
             this.productList.splice(index, 1);
             this.$toast.success(res.data.message);

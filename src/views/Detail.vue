@@ -29,11 +29,11 @@ export default {
         id: this.$route.query.id
       }
     })
-      .then(res => {
+      .then((res) => {
         this.detail = res.data.data;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.$toast.fail('获取商品详细信息失败');
       });
   },
   data() {
@@ -61,7 +61,9 @@ export default {
           }
         })
           .then(res => {
-            res.data.code === 200 && this.$toast.success(res.data.message);
+            if (res.data.code === 200) {
+              this.$toast.success(res.data.message);
+            }
           })
           .catch(() => {
             this.$toast.fail('添加失败');

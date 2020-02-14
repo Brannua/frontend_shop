@@ -1,7 +1,7 @@
 
 /* 统一后台接口配置 */
 
-const MOCKSERVERURL = 'http://www.lpj.com/' // mock
+const MOCKSERVERURL = 'http://www.lpj.com/'
 const SERVERURL = 'http://localhost:3000/'
 
 export default {

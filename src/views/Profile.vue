@@ -4,14 +4,7 @@
       <van-tab title="登录">
         <van-cell-group>
           <van-field required clearable label="用户名" v-model="loginUserName" placeholder="请输入用户名" />
-          <van-field
-            required
-            clearable
-            label="密码"
-            v-model="loginPassWord"
-            type="password"
-            placeholder="请输入密码"
-          />
+          <van-field required clearable label="密码" v-model="loginPassWord" placeholder="请输入密码" type="password" />
         </van-cell-group>
         <div>
           <van-button type="primary" size="large" @click="loginHandler">登录</van-button>
@@ -21,14 +14,7 @@
       <van-tab title="注册">
         <van-cell-group>
           <van-field required clearable label="用户名" v-model="registUserName" placeholder="请输入用户名" />
-          <van-field
-            required
-            clearable
-            label="密码"
-            v-model="registPassWord"
-            type="password"
-            placeholder="请输入密码"
-          />
+          <van-field required clearable label="密码" v-model="registPassWord" placeholder="请输入密码" type="password" />
         </van-cell-group>
         <div>
           <van-button type="info" size="large" @click="registHandler">注册</van-button>
@@ -61,7 +47,7 @@ export default {
           passWord: this.registPassWord
         }
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.$toast.success("注册成功");
             this.registUserName = this.registPassWord = "";
@@ -82,7 +68,7 @@ export default {
           passWord: this.loginPassWord
         }
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.$toast.success("登陆成功");
             // 保存用户信息
@@ -101,6 +87,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-</style>

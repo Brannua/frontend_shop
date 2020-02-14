@@ -1,28 +1,17 @@
 <template>
   <div>
-    <van-nav-bar title="商品分类" class="nav"></van-nav-bar>
+    <van-nav-bar class="nav" title="商品分类"></van-nav-bar>
     <div class="category">
       <van-row>
-        <van-col span="6" class="left-nav">
+        <van-col class="left-nav" span="6">
           <ul>
-            <li
-              v-for="(item, index) in productTypes"
-              :key="index"
-              :class="{active: index == active}"
-              @click="activeHandler(index)"
-            >{{ item.typeName }}</li>
+            <li v-for="(item, index) in productTypes" :key="index" :class="{active: index == active}" @click="activeHandler(index)">{{ item.typeName }}</li>
           </ul>
         </van-col>
-        <van-col span="18" class="container">
+        <van-col class="container" span="18">
           <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
-            <van-list
-              class="list"
-              v-model="loading"
-              :finished="finished"
-              @load="loadMoreData"
-              :immediate-check="false"
-            >
-              <div @click="goDetail(item._id)" class="list-item" v-for="(item, index) in productList" :key="index">
+            <van-list class="list" v-model="loading" :finished="finished" :immediate-check="false" @load="loadMoreData">
+              <div v-for="(item, index) in productList" :key="index" class="list-item" @click="goDetail(item._id)">
                 <img :src="item.img" />
                 <p class="list-item-name">{{ item.name }}</p>
                 <p>$ {{ item.price }}</p>
@@ -43,7 +32,7 @@ export default {
       method: "get",
       url: api.getProductTypes
     })
-      .then(res => {
+      .then((res) => {
         this.productTypes = res.data.data;
         this.getProductList(
           this.productTypes[this.active].typeId,
@@ -51,8 +40,8 @@ export default {
           this.count
         );
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.$toast.fail('获取商品分类失败');
       });
   },
   data() {
@@ -77,7 +66,7 @@ export default {
           count
         }
       })
-        .then(res => {
+        .then((res) => {
           if (res.data.data.length) {
             this.productList = this.productList.concat(res.data.data);
             this.loading = false;
@@ -85,8 +74,8 @@ export default {
             this.finished = true;
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          this.$toast.fail('获取商品数据失败');
         });
     },
     // 改变选中的商品分类

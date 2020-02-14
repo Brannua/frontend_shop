@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <!-- 首页头部导航栏 -->
-    <van-nav-bar title="首页" class="nav-bar">
+    <van-nav-bar class="nav-bar" title="首页">
       <van-icon name="search" slot="left"></van-icon>
       <van-icon slot="right" @click="loginHandler">{{ JSON.stringify(userInfo) === '{}' ? '点击登录' : userInfo.userName }}</van-icon>
     </van-nav-bar>
 
     <!-- 轮播图 -->
-    <van-swipe :autoplay="3000" class="swiper">
+    <van-swipe class="swiper" :autoplay="3000">
       <van-swipe-item v-for="(item, index) in swipeItems" :key="index">
         <img v-lazy="item.imgSrc" />
       </van-swipe-item>
@@ -31,7 +31,7 @@
     <div class="recommend">
       <p>推荐商品</p>
       <ul class="recommend-list">
-        <li v-for="(product, index) in recommendProducts" class="recommend-list-item" :key="index">
+        <li v-for="(product, index) in recommendProducts" :key="index" class="recommend-list-item">
           <img :src="product.img" />
           <p>{{ product.name }}</p>
           <p>$ {{ product.price }}</p>

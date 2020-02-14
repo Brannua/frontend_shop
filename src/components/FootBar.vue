@@ -9,17 +9,18 @@
 
 <script>
 export default {
-  data () {
+  created() {
+    let stringResult = localStorage.getItem("active");
+    this.active = parseInt(stringResult);
+  },
+  data() {
     return {
       active: 0
-    }
-  },
-  created() {
-    this.active = parseInt(localStorage.getItem('active'));
+    };
   },
   methods: {
     changeHandler(active) {
-      localStorage.setItem('active', active);
+      localStorage.setItem("active", active);
     }
   }
 };
