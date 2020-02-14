@@ -1,76 +1,59 @@
 # 移动端农机商城前端 ( SPA )
 
-> 基础命令
+- 项目技术栈
 
-```
-npm install // Project setup
+  - `Vue、Vant、ES6、Scss、webpack、Node.js、Koa2、 MongoDB、Mongoose`
 
-npm run serve // Compiles and hot-reloads for development
+- 开发环境
 
-npm run build // Compiles and minifies for production
+  - [VueCLI v3.11.0](https://cli.vuejs.org/zh/config/)
 
-npm run test // Run your tests
+    ```
+    vue create front_shop // 创建项目结构
+    ```
 
-npm run lint // Lints and fixes files
-```
+  - 依赖 ( In dedicated config files )
 
-> 开发环境
+    - Babel
+    - Router
+    - Vuex
+    - CSS Pre-processors Sass/SCSS (with dart-sass) for sass
+    - ESLint with error prevention only ( Lint on save )
 
-- [Vue-cli-config-doc](https://cli.vuejs.org/zh/config/)
+- 开发规则
 
-- Vue/cli --> v3.11.0 
+  - 模块化规范 : ES6
+
+  - 路由模式 : hash
+
+- /src 目录
 
   ```
-  vue create front_shop // 创建项目结构
+  assets              // 第三方资源文件
+  components          // 公共组件
+  mock                // 生成随机数据拦截Ajax请求模拟后端数据接口 ( 用于后端接口未完成的前端开发环境下 )
+  router              // vue-router 管理路由
+  store               // vuex 状态管理
+  views               // 页面组件
+  App.vue             // 根组件
+  main.js             // 主js文件
+  service.config.js   // 统一配置后台接口
   ```
 
-- 依赖 ( In dedicated config files )
-
-  - Babel
-  - Router
-  - Vuex
-  - CSS Pre-processors Sass/SCSS (with dart-sass) for sass
-  - ESLint with error prevention only ( Lint on save )
-
-> 开发规则
-
-- 路由模式 : hash
-
-- 模块化规范遵循 ES6
-
-- 路由跳转的方式
-
-  - vant : ```<van-tabbar-item to="path"/>```
-  - [van-tabbar-doc](https://youzan.github.io/vant/#/zh-CN/tabbar)
-  - vue-router : ```<router-link to="path"/>```
-
-> src 目录
-
-- assets : 第三方资源文件
-- components : 公共组件
-- mock : 生成随机数据模拟后端数据接口 , 拦截 Ajax 请求 , 用于后端接口未完成的前端开发环境下
-- router : vue-router 管理路由
-- store : vuex 管理数据
-- views : 页面组件
-- App.vue : 根组件
-- main.js : 主js文件
-
-> 针对不同移动端屏幕采用的适配解决方案
+- 针对不同移动端屏幕采用的适配解决方案
 
   - **rem** ( @/assets/js/rem.js )
   - **Flex** ( 弹性盒模型 )
 
-> 本项目采用组件库 : Vant ( v2.2.3 )
-
-  - [vant-doc](https://youzan.github.io/vant/#/zh-CN/intro/)
+- 本项目采用组件库 : [Vant](https://youzan.github.io/vant/#/zh-CN/intro/)
 
   - 安装
 
     ```
-    npm i vant@2.2.3 -S
+    npm i vant -S // Tips : 项目开发采用版本 ( 2.2.3 )
     ```
 
-  - babel7 按需导入组件配置
+  - 按需导入组件配置 ( babel7 )
 
     ```
     npm i babel-plugin-import -D
@@ -86,25 +69,24 @@ npm run lint // Lints and fixes files
           style: true
         }, 'vant']
       ]
-    };
+    }
     ```
 
-  - 按需导入组件示例 ( main.js )
+  - 按需导入组件示例
 
     ```
+    // /src/main.js
     import { Component, ... } from 'vant'
     Vue.use( Component ).use(...) // 支持链式操作
     ```
-
-  - [vant-doc](https://youzan.github.io/vant/#/zh-CN/intro/)
 
   - 其他常见的优秀 Vue.js 组件库 : Vux、iView、ElementUI、Muse-UI ...
 
 - 首页头部导航栏
 
-  - chrome 控制台中的 element.style 是通过 js 代码添加的内联样式
+  - Chrome 控制台中的 ```element.style``` 是通过 js 代码添加的内联样式
 
-  - css 中 !important 权重值最高
+  - Css 中 ```!important``` 权重值最高
 
     ```
     elem {
@@ -114,39 +96,38 @@ npm run lint // Lints and fixes files
 
 - 首页轮播图优化
 
-  > 强制规定了首页轮播图的宽高
+  - 强制规定了首页轮播图的宽高
 
-  ```
-  // html
-  <van-swipe class="swipe">
-    <van-swipe-item>
-      <img/>
-    </van-swipe-item>
-  </van-swipe>
+    ```
+    // html
+    <van-swipe class="swipe">
+      <van-swipe-item>
+        <img/>
+      </van-swipe-item>
+    </van-swipe>
 
-  // css
-  .swipe {
-    height: 3.6rem;
-    img {
-      width: 100%;
-      height: 100%;
+    // css
+    .swipe {
+      height: 3.6rem;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
-  }
-  ```
+    ```
 
-  > 采用图片懒加载
+  - 采用图片懒加载
 
-  ```
-  // 引入Lazyload组件
-  import { Lazyload } from 'vant'
-  Vue.use( Lazyload )
-  // 使用
-  <img v-lazy="imgSrc"/>
-  ```
+    ```
+    // 引入Lazyload组件
+    import { Lazyload } from 'vant'
+    Vue.use( Lazyload )
 
-- 首页热门商品组件 ( Vue-Awesome-Swiper )
+    // 使用
+    <img v-lazy="imgSrc"/>
+    ```
 
-  - [doc](https://www.npmjs.com/package/vue-awesome-swiper)
+- 首页热门商品组件 : [Vue-Awesome-Swiper](https://www.npmjs.com/package/vue-awesome-swiper)
 
   - 安装
 
@@ -173,74 +154,40 @@ npm run lint // Lints and fixes files
 
     - html 组件和 js 配置项建立对应关系如下
 
-    ```
-    // html
-    <swiper :options="swiperOption" />
+      ```
+      // html
+      <swiper :options="swiperOption" />
 
-    // js
-    export default {
-      data() {
-        return {
-          swiperOption: {
-            slidesPerView: 3
+      // js
+      export default {
+        data() {
+          return {
+            swiperOption: {
+              slidesPerView: 3
+            }
           }
-        };
+        }
       }
-    };
-    ```
+      ```
 
-- 首页推荐商品
-
-  - flex 布局 , 子元素使用 flex-basis 设置宽度
+- 首页推荐商品采用flex布局
 
     ```
-    flex-basis: 45%; // 优先级比 width 高
-    ```
-
-- 前后端交互通信技术 Ajax && Axios ( v0.19.2 )
-
-  - 手动封装兼容性 Ajax
-
-    ```
-    // flag 默认为 true , 表示发送ajax请求是异步操作
-    function ajaxFunc(method, url, data, callback, flag) {
-
-      // 获取兼容IE的AJAX对象
-      var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
-      method = method.toUpperCase(); // 转大写
-
-      // 发送请求
-      if (method == 'GET') {
-          xhr.open(method, url, flag);
-          xhr.send();
-      }
-      if (method == 'POST') {
-          xhr.open(method, url + '?' + data, flag);
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); //设置请求头,使用form表单的默认编码格式
-          xhr.send(data);
-      }
-
-      // 事件监听
-      xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-              if (xhr.status == 200) {
-                  callback(xhr.responseText);
-              }
-          }
-      }
-
+    .parent {
+      display: flex;
+    }
+    .son {
+      flex-basis: 45%; // 设置宽度, 优先级比 width 高
     }
     ```
 
-  - get 和 post 发送请求的区别
+- 路由跳转的两种方式
 
-    - get : 获取数据 , 请求参数可见 , 通过请求头发送数据 , 数据量小...
+  - [van-tabbar](https://youzan.github.io/vant/#/zh-CN/tabbar) : ```<van-tabbar-item to="path"/>```
 
-    - post : 提交数据 , 请求参数隐藏 , 通过请求体发送数据 , 数据量大...
+  - vue-router : ```<router-link to="path"/>```
 
-  - Axios : 基于 Promise 的 HTTP 库
-
-    - [axios-doc](https://www.npmjs.com/package/axios)
+- 前后端通信采用基于Promise的HTTP库 : [Axios](https://www.npmjs.com/package/axios)
 
     - 安装
 
@@ -272,19 +219,20 @@ npm run lint // Lints and fixes files
       - axios.all() 按照请求的顺序返回结果数组
       - axios.spread() 处理结果数组
 
-      ```
-      axios.all([func1(), func2(), func3(), ...]).then(
-        axios.spread((res1, res2, res3, ...) => {
-          // ...
-        })
-      )
-      ```
+        ```
+        axios.all([func1(), func2(), func3(), ...]).then(
+          axios.spread((res1, res2, res3, ...) => {
+            // ...
+          })
+        )
+        ```
 
-    - [Vue.js 生命周期图示](https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA)
+    - get 和 post 发送请求的区别
 
-- Mock.js 生成随机数据 , 拦截 Ajax 请求
+      - get : 获取数据 , 请求参数可见 , 通过请求头发送数据 , 数据量小...
+      - post : 提交数据 , 请求参数隐藏 , 通过请求体发送数据 , 数据量大...
 
-  - [mock-doc](http://mockjs.com/)
+- [Mock.js](http://mockjs.com/) 生成随机数据模拟后端接口拦截Ajax请求
 
   - 安装
 
@@ -292,44 +240,37 @@ npm run lint // Lints and fixes files
     npm install mockjs --save-dev
     ```
 
+  - 定义
+
+    ```
+    @/mock
+    ```
+
   - 引入
 
     ```
     // main.js
     import '@/mock/mock.js'
-    ```
+    ```  
 
-  - 定义
 
-    ```
-    @/mock
-    ```    
+- 统一配置后台接口
 
-- 后台接口配置
+  ```
+  // src/service.config.js
+  export default {
+    registUser: `${SERVERURL}user/registUser`
+  }
 
-  - 统一定义后台接口
+  // in component
+  import api from '@/service.config.js'
+  axios({
+    method: 'get',
+    url: api.getSwipeItems
+  })
+  ```
 
-    ```
-    // src/service.config.js
-    const SERVERURL = URL
-    export default {
-      getSwipeItems: `${SERVERURL}getSwipeItems`,
-    }
-    ```
-
-  - 接口调用示例
-
-    ```
-    // component
-    import api from '@/service.config.js'
-    axios.get(api.getSwipeItems).then(res=>{...})
-    ```
-
-- 注册 / 登录 页面编写 ( @/views/profile.vue )
-
-- 用户登录功能还可以使用 阿里大于 给用户发短信验证码 , 哈哈哈哈哈哈~
-
-- 保存成功登陆的用户信息的一些实现方案
+- 保存成功登陆的用户信息的实现方案
 
   - 方法一 : 挑选使用基于 Session 会话的中间件 
   
@@ -337,15 +278,15 @@ npm run lint // Lints and fixes files
 
     - [cookie-session](https://www.npmjs.com/package/cookie-session)
 
-    - cookie 保存在客户端 , session 保存在服务端 , sessionID 保存在 cookie 里面
+    - Tips : cookie 保存在客户端 , session 保存在服务端 , sessionID 保存在 cookie 里面
 
   - 方法二 : Redis
 
   - 方法三 : H5 本地化存储方案
 
-    - sessionStorage
-
     - localStorage
+
+    - sessionStorage
 
   - 方法四 : [Vuex](https://vuex.vuejs.org/zh/)
 
@@ -355,25 +296,18 @@ npm run lint // Lints and fixes files
 
     - 该功能中 actions 的使用单纯是为了练习通过 actions 派发 commit 来调用 mutations 的方法来改变 state 中的数据 , 而 actions 的真正意义在于其中可以书写异步代码 , mutations 是唯一可以改变 state 中数据的方法 , 其中只能书写同步代码
 
-- 商品分类页面 ( [van-col](https://youzan.github.io/vant/#/zh-CN/col) 栅格布局 )
+- 商品分类页面
+
+  - 采用 : [van-col 栅格布局](https://youzan.github.io/vant/#/zh-CN/col)
 
   - 改变选中的商品分类交互
 
     ```
     // html
     <li
-      v-for="(item, index) in productTypes"
-      :key="index"
       :class="{active: index == active}"
       @click="activeHandler(index)"
     >{{ item.typeName }}</li>
-
-    // data
-    data() {
-      return {
-        active: 0, // 默认选中第一种商品分类
-      };
-    }
 
     // css
     .active {
@@ -382,6 +316,11 @@ npm run lint // Lints and fixes files
     }
 
     // js
+    data() {
+      return {
+        active: 0 // 默认选中第一种商品分类
+      }
+    }
     methods: {
       // 改变选中的商品分类
       activeHandler(index) {
@@ -390,7 +329,9 @@ npm run lint // Lints and fixes files
     }
     ```
 
-  - 商品分类对应的商品列表 ( [van-list](https://youzan.github.io/vant/#/zh-CN/list) 自带上拉加载和下拉刷新 )
+  - 商品分类对应的商品列表
+
+    - [van-list](https://youzan.github.io/vant/#/zh-CN/list) 自带上拉加载和下拉刷新
 
     - 商品名称只显示两行 , 多余内容打点显示
 
@@ -416,7 +357,7 @@ npm run lint // Lints and fixes files
           this.productTypes[this.active].typeId,
           this.productList.length,
           // ...
-        );
+        )
       }
       ```
 
@@ -521,26 +462,31 @@ npm run lint // Lints and fixes files
   }
   ```
 
-- vue2.x 提出 ```<keep-alive />``` 组件, 主要用于保留组件状态或避免重新渲染。
+- vue2.x 提出 [keep-alive](https://cn.vuejs.org/v2/api/#keep-alive) 组件 , 主要用于保留组件状态或避免重新渲染。
 
-  - [doc](https://cn.vuejs.org/v2/api/#keep-alive)
+  ```
+  // App.vue
+  <keep-alive>
+    <router-view v-if="$route.meta.keepAlive"></router-view>
+  </keep-alive>
+  <router-view v-else="!$route.meta.keepAlive"></router-view>
 
-    ```
-    // App.vue
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-else="!$route.meta.keepAlive"></router-view>
-
-    // /@/router/index.js 中指定需要被缓存的组件的路由
-    meta: {
-      keepAlive: true
-    }
-    ```
+  // /@/router/index.js 中指定需要被缓存的组件的路由
+  meta: {
+    keepAlive: true
+  }
+  ```
 
 - 路由组件采用懒加载的方式
 
-- 增添404错误组件 (@/views.Error.vue)
+  ```
+  {
+    path: '/',
+    component: () => import("@/views/Home")
+  }
+  ```
+
+- 增添404错误组件 (@/views/Error.vue)
 
 - 项目打包和分析(--report)
 
