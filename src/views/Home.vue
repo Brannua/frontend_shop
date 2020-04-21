@@ -42,10 +42,12 @@
 </template>
 
 <script>
-import "swiper/dist/css/swiper.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-import api from '@/service.config.js';
-import { mapState } from 'vuex';
+
+import api from '@/service.config.js'
+import "swiper/dist/css/swiper.css"
+import { swiper, swiperSlide } from "vue-awesome-swiper"
+import { mapState } from 'vuex'
+
 export default {
   components: {
     swiper,
@@ -56,36 +58,12 @@ export default {
       swipeItems: [],
       hotProducts: [],
       swiperOption: {
-        // 热门商品配置项
-        slidesPerView: 3
+        slidesPerView: 3  // 热门商品配置项
       },
       recommendProducts: []
-    };
-  },
-  computed: mapState(['userInfo']),
-  methods: {
-    getSwipeItems() {
-      return this.$axios({
-        method: 'get',
-        url: api.getSwipeItems
-      })
-    },
-    getHotProducts() {
-      return this.$axios({
-        method: 'get',
-        url: api.getHotProducts
-      })
-    },
-    getRecommendProducts() {
-      return this.$axios({
-        method: 'get',
-        url: api.getRecommendProducts
-      })
-    },
-    loginHandler() {
-      this.$router.push('/profile');
     }
   },
+  computed: mapState(['userInfo']),
   created() {
     this.$axios.all([this.getSwipeItems(), this.getHotProducts(), this.getRecommendProducts()]).then(
       this.$axios.spread((res1, res2, res3) => {
@@ -94,8 +72,43 @@ export default {
         this.recommendProducts = res3.data
       })
     )
+  },
+  methods: {
+    /**
+     * @description 获取轮播图数据
+     */
+    getSwipeItems() {
+      return this.$axios({
+        method: 'get',
+        url: api.getSwipeItems
+      })
+    },
+    /**
+     * @description 获取热门商品数据
+     */
+    getHotProducts() {
+      return this.$axios({
+        method: 'get',
+        url: api.getHotProducts
+      })
+    },
+    /**
+     * @description 获取推荐商品数据
+     */
+    getRecommendProducts() {
+      return this.$axios({
+        method: 'get',
+        url: api.getRecommendProducts
+      })
+    },
+    /**
+     * @description 右上角登录导航
+     */
+    loginHandler() {
+      this.$router.push('/profile')
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

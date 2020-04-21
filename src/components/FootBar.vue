@@ -10,18 +10,23 @@
 <script>
 export default {
   created() {
-    let stringResult = localStorage.getItem("active");
-    this.active = parseInt(stringResult);
+    let stringResult = sessionStorage.getItem("active")
+    if (stringResult) {
+      // 刷新页面 footer当前选中不改变
+      this.active = parseInt(stringResult)
+    } else {
+      this.active = 0
+    }
   },
   data() {
     return {
       active: 0
-    };
+    }
   },
   methods: {
     changeHandler(active) {
-      localStorage.setItem("active", active);
+      sessionStorage.setItem("active", active)
     }
   }
-};
+}
 </script>

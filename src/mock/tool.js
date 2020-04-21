@@ -1,7 +1,12 @@
-import Mock from 'mockjs'
-let Random = Mock.Random
+/**
+ * @description mock.js 生成假数据
+ * @author Brannua
+ */
 
-/* 生成模拟农机商品数据 */
+import Mock from 'mockjs'
+const Random = Mock.Random
+
+// 生成模拟农机商品数据
 export function mockProductData() {
   let productList = []
   for (let i = 0; i < 12; i++) {
@@ -16,12 +21,12 @@ export function mockProductData() {
   return productList
 }
 
-/* 生成模拟轮播图片数据 */
+// 生成模拟轮播图片数据
 export function mockSwiperImage() {
   let imageList = []
   for (var i = 0; i < 4; i++) {
     imageList.push({
-      imgSrc: Random.dataImage('320x180', '农机' + Random.integer(1, 4)),
+      imgSrc: Random.dataImage('320x180', '农机' + Random.integer(1, 4))
     })
   }
   return imageList

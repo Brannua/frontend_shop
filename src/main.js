@@ -6,14 +6,14 @@ import store from './store'
 import '@/assets/css/reset.css' // css基础样式重置
 import '@/assets/js/rem.js' // 不同移动端屏幕适配解决方案
 
-/* Vue 挂载 axios */
+// Vue 挂载 axios
 import axios from 'axios'
 Vue.prototype.$axios = axios
 
-/* mock.js 生成随机数据模拟后端接口 , 拦截 Ajax 请求 , 后端接口上线即废弃 */
+// mock.js 生成随机数据模拟后端接口 , 拦截 Ajax 请求 , 后端接口上线即废弃
 import '@/mock/mock.js'
 
-/* 按需引入vant组件 */
+// 按需引入vant组件
 import {
   NavBar,
   Icon,

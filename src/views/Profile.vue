@@ -25,8 +25,10 @@
 </template>
 
 <script>
-import api from "@/service.config.js";
-import { mapActions } from 'vuex'; // 映射 vuex 中的所有 action
+
+import api from "@/service.config.js"
+import { mapActions } from 'vuex' // 映射 vuex 中的所有 action
+
 export default {
   data() {
     return {
@@ -34,56 +36,82 @@ export default {
       loginPassWord: "",
       registUserName: "",
       registPassWord: ""
-    };
+    }
   },
   methods: {
     ...mapActions(['loginAction']), // 加载指定名称的 action 方法
+    /**
+     * @description 用户注册
+     */
     registHandler() {
+
+      const {registUserName, registPassWord} = this
+
       this.$axios({
         method: "post",
         url: api.registUser,
         data: {
-          userName: this.registUserName,
-          passWord: this.registPassWord
+          userName: registUserName,
+          passWord: registPassWord
         }
       })
         .then((res) => {
           if (res.data.code == 200) {
-            this.$toast.success("注册成功");
-            this.registUserName = this.registPassWord = "";
-          } else {
-            this.$toast.fail("注册失败");
+            this.$toast.success("注册成功")
+            this.registUserName = ""
+            this.registPassWord = ""
+            return
           }
+          this.$toast.fail("注册失败")
         })
         .catch(() => {
-          this.$toast.fail("注册失败");
-        });
+          this.$toast.fail("注册失败")
+        })
     },
+
+    /**
+     * @description 用户登录
+     */
     loginHandler() {
+
+      const {loginUserName, loginPassWord} = this
+
       this.$axios({
         method: "post",
         url: api.loginUser,
         data: {
-          userName: this.loginUserName,
-          passWord: this.loginPassWord
+          userName: loginUserName,
+          passWord: loginPassWord
         }
       })
         .then((res) => {
-          if (res.data.code == 200) {
-            this.$toast.success("登陆成功");
-            // 保存用户信息
-            this.loginAction(res.data.userInfo);
-            // 跳转回上一页
-            this.$router.go(-1);
-          } else {
-            res.data.code == 404 && this.$toast.fail("用户名不存在");
-            res.data.code == 401 && this.$toast.fail("密码错误");
+
+          const {data} = res
+          const {code, userInfo} = data
+
+          if (code == 200) {
+            this.$toast.success("登陆成功")
+            this.loginAction(userInfo)  // 保存用户信息
+            this.$router.go(-1) // 跳转回上一页
+            return
           }
+
+          switch (code) {
+            case 401:
+              this.$toast.fail("密码错误")
+              break
+            case 404:
+              this.$toast.fail("用户名不存在")
+              break
+            default:
+              break
+          }
+
         })
         .catch(() => {
-          this.$toast.fail("登陆失败");
-        });
+          this.$toast.fail("登陆失败")
+        })
     }
   }
-};
+}
 </script>

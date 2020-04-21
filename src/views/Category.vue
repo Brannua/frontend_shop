@@ -25,95 +25,130 @@
 </template>
 
 <script>
-import api from "@/service.config.js";
+import api from "@/service.config.js"
 export default {
+  data() {
+    return {
+      active: 0, // 默认选中商品分类
+      productTypes: [], // 商品类别
+      productList: [],  // 商品数据
+      count: 10, // 默认一次查询数据条数
+      loading: false,
+      finished: false,
+      isRefresh: false
+    }
+  },
   created() {
     this.$axios({
       method: "get",
       url: api.getProductTypes
     })
       .then((res) => {
-        this.productTypes = res.data.data;
-        this.getProductList(
-          this.productTypes[this.active].typeId,
-          this.productList.length,
-          this.count
-        );
+        const {data: {data}} = res
+
+        const {typeId} = data[this.active]
+        const {length} = this.productList
+        const {count} = this
+
+        this.productTypes = data
+        this.getProductList( typeId, length, count )
       })
       .catch(() => {
-        this.$toast.fail('获取商品分类失败');
-      });
-  },
-  data() {
-    return {
-      active: 0, // 默认选中第一种商品分类
-      productTypes: [],
-      productList: [],
-      count: 10, // 默认一次查询十条数据
-      loading: false,
-      finished: false,
-      isRefresh: false
-    };
+        this.$toast.fail(
+          `获取商品分类失败`
+        )
+      })
   },
   methods: {
+    /**
+     * @description 获取商品列表
+     * @param {number} typeId typeId
+     * @param {number} start 用于分页查询
+     * @param {number} count 一次查询的数据条数
+     */
     getProductList(typeId, start, count) {
       this.$axios({
         method: "get",
         url: api.getProductsByType,
-        params: {
-          typeId,
-          start,
-          count
-        }
+        params: { typeId, start, count }
       })
         .then((res) => {
-          if (res.data.data.length) {
-            this.productList = this.productList.concat(res.data.data);
-            this.loading = false;
-          } else {
-            this.finished = true;
+
+          const {data: {data}} = res
+
+          if (data.length) {
+            this.productList = this.productList.concat(data)
+            this.loading = false
+            return
           }
+
+          this.finished = true
         })
         .catch(() => {
-          this.$toast.fail('获取商品数据失败');
-        });
+
+          this.$toast.fail(
+            `获取商品数据失败`
+          )
+
+        })
     },
-    // 改变选中的商品分类
+
+    /**
+     * @description 改变选中的商品分类
+     * @param {number} index index
+     */
     activeHandler(index) {
-      this.active = index;
-      this.productList = [];
-      this.getProductList(
-        this.productTypes[this.active].typeId,
-        this.productList.length,
-        this.count
-      );
+      this.active = index
+      this.productList = []
+
+      const {typeId} = this.productTypes[this.active]
+      const {length} = this.productList
+      const {count} = this
+
+      this.getProductList( typeId, length, count )
     },
+
+    /**
+     * @description 上拉加载
+     */
     loadMoreData() {
-      this.getProductList(
-        this.productTypes[this.active].typeId,
-        this.productList.length,
-        this.count
-      );
+      const {typeId} = this.productTypes[this.active]
+      const {length} = this.productList
+      const {count} = this
+
+      this.getProductList( typeId, length, count )
     },
+
+    /**
+     * @description 下拉刷新
+     */
     onRefresh() {
-      this.productList = [];
-      this.getProductList(
-        this.productTypes[this.active].typeId,
-        this.productList.length,
-        this.count
-      );
-      this.isRefresh = false;
+      this.productList = []
+
+      const {typeId} = this.productTypes[this.active]
+      const {length} = this.productList
+      const {count} = this
+
+      this.getProductList( typeId, length, count )
+      this.isRefresh = false
     },
+
+    /**
+     * @description 进入商品详情
+     * @param {string} productId productId
+     */
     goDetail(productId) {
+
       this.$router.push({
         path: '/detail',
         query: {
           id: productId
         }
-      });
+      })
+
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

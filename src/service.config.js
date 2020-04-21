@@ -1,5 +1,7 @@
-
-/* 统一后台接口配置 */
+/**
+ * @description 统一后台接口配置
+ * @author Brannua
+ */
 
 const MOCKSERVERURL = 'http://www.lpj.com/'
 const SERVERURL = 'http://localhost:3000/'

@@ -18,60 +18,85 @@
 </template>
 
 <script>
-import api from "@/service.config.js";
-import { mapState } from "vuex";
+
+import api from "@/service.config.js"
+import { mapState } from "vuex"
+
 export default {
-  created() {
-    this.$axios({
-      method: "get",
-      url: api.getProductDetailById,
-      params: {
-        id: this.$route.query.id
-      }
-    })
-      .then((res) => {
-        this.detail = res.data.data;
-      })
-      .catch(() => {
-        this.$toast.fail('获取商品详细信息失败');
-      });
-  },
   data() {
     return {
       detail: {}
-    };
+    }
   },
   computed: mapState(["userInfo"]),
+  created() {
+
+    const {id} = this.$route.query
+
+    this.$axios({
+      method: "get",
+      url: api.getProductDetailById,
+      params: { id }
+    })
+      .then((res) => {
+        this.detail = res.data.data
+      })
+      .catch(() => {
+
+        this.$toast.fail(
+          `获取商品详细信息失败`
+        )
+
+      })
+  },
   methods: {
+    /**
+     * @description 返回上一页
+     */
     returnPrevPage() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
+    /**
+     * @description 添加到购物车
+     */
     addCartHandler() {
+
+      // 获取登录状态
+      let isLogin = true
       if (JSON.stringify(this.userInfo) === "{}") {
-        this.$toast.fail("请先登录");
-        this.$router.push("/profile");
-      } else {
-        // 插入购物车
-        this.$axios({
-          method: "post",
-          url: api.addProductToCart,
-          data: {
-            productId: this.detail._id,
-            userId: this.userInfo._id
+        isLogin = false
+      }
+
+      // 没登录就先登录
+      if (!isLogin) {
+        this.$toast.fail("请先登录")
+        this.$router.push("/profile")
+        return
+      }
+
+      const {_id: productId} = this.detail
+      const {_id: userId} = this.userInfo
+
+      // 添加购物车
+      this.$axios({
+        method: "post",
+        url: api.addProductToCart,
+        data: { productId, userId }
+      })
+        .then(res => {
+          const {data} = res
+          if (data.code === 200) {
+            this.$toast.success(data.message)
           }
         })
-          .then(res => {
-            if (res.data.code === 200) {
-              this.$toast.success(res.data.message);
-            }
-          })
-          .catch(() => {
-            this.$toast.fail('添加失败');
-          });
-      }
+        .catch(() => {
+          this.$toast.fail(
+            `添加失败`
+          )
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

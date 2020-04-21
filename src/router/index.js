@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-let FootBar = () => import("@/components/FootBar.vue")
-
 Vue.use(VueRouter)
+
+const FootBar = () => import("@/components/FootBar.vue")
 
 const routes = [{
     path: '/',

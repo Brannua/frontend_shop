@@ -13,54 +13,83 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import api from "@/service.config.js";
+
+import { mapState } from "vuex" // vuex状态管理
+import api from "@/service.config.js" // 统一接口配置
+
 export default {
-  created() {
-    if (JSON.stringify(this.userInfo) === "{}") {
-      this.$toast.fail("请先登录");
-      this.$router.push("/profile");
-    } else {
-      this.$axios({
-        method: "get",
-        url: api.getCartByUserId,
-        params: {
-          userId: this.userInfo._id
-        }
-      })
-        .then(res => {
-          if (res.data.data.length === 0) {
-            this.$toast.fail("空空如也");
-          } else {
-            for (let item of res.data.data) {
-              this.productList.push(item.productId);
-            }
-          }
-        })
-        .catch(() => {
-          this.$toast.fail("获取购物车列表失败");
-        });
-    }
-  },
   data() {
     return {
-      productList: []
-    };
+      productList: [] // 默认购物车数据为空数组
+    }
   },
   computed: {
     ...mapState(["userInfo"]),
+    // 计算总价
     sumPrice() {
       return (
-        this.productList.reduce((sum, itemPrice) => {
-          return sum += itemPrice.price;
+        this.productList.reduce((sum, item) => {
+          return sum += item.price
         }, 0) * 100
-      );
+      )
     }
   },
+  created() {
+
+    // 获取登录状态
+    let isLogin = true
+    if (JSON.stringify(this.userInfo) === "{}") {
+      isLogin = false
+    }
+
+    // 没登录就先登录
+    if (!isLogin) {
+      this.$toast.fail("请先登录")
+      this.$router.push("/profile")
+      return
+    }
+
+    const { _id: userId } = this.userInfo
+    this.$axios({
+      method: "get",
+      url: api.getCartByUserId,
+      params: { userId }
+    })
+      .then((res) => {
+        const {data: {data}} = res
+
+        if (data.length === 0) {
+          this.$toast.fail(
+            `空空如也`
+          )
+          return
+        }
+
+        for (let item of data) {
+          this.productList.push(item.productId)
+        }
+
+      })
+      .catch(() => {
+        this.$toast.fail(
+          `获取购物车列表失败`
+        )
+      })
+  },
   methods: {
+    /**
+     * @description 友好提示
+     */
     submitHandler() {
-      this.$toast.success("结算功能该项目未涉及");
+      this.$toast.success(
+        `结算功能该项目未涉及`
+      )
     },
+    /**
+     * @description 删除购物车中的指定商品
+     * @param {string} id 商品id
+     * @param {number} index index
+     */
     deleteProductHandler(id, index) {
       this.$axios({
         method: "post",
@@ -70,17 +99,23 @@ export default {
         }
       })
         .then((res) => {
-          if (res.data.code === 200) {
-            this.productList.splice(index, 1);
-            this.$toast.success(res.data.message);
+
+          const {data} = res
+
+          if (data.code === 200) {
+            this.productList.splice(index, 1)
+            this.$toast.success(data.message)
           }
+
         })
         .catch(() => {
-          this.$toast.fail("删除失败");
-        });
+          this.$toast.fail(
+            `删除失败`
+          )
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
