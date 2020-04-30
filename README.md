@@ -1,5 +1,7 @@
 # 移动端农机商城前端项目
 
+> [项目后端部分请移步此处](https://github.com/Brannua/backend_shop)
+
 > [项目文档和开发笔记总结请移步此处](https://blog.csdn.net/Brannua/article/details/104320841)
 
 ### 项目技术栈
