@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// 底部FootBar公共组件
 const FootBar = () => import("@/components/FootBar.vue")
 
 const routes = [{

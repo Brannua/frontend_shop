@@ -7,7 +7,7 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
 
-    <!-- components中的公共组件FootBar 路由具名组件foot-bar -->
+    <!-- @/components/FootBar -->
     <router-view name="foot-bar"></router-view>
 
   </div>
